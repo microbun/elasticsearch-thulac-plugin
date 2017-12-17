@@ -7,7 +7,7 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/src/main/models</directory>
+            <directory>models</directory>
             <outputDirectory>/models</outputDirectory>
         </fileSet>
     </fileSets>
