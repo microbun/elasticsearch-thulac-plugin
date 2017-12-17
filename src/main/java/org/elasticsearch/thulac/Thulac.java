@@ -40,6 +40,10 @@ public class Thulac {
     }
 
     private Thulac() {
+        init();
+    }
+
+    public void init(){
         String prefix = configuration.segOnly ? "cws_" : "model_c_";
         Character separator = '_';
         cbTaggingDecoder.separator = separator;
@@ -66,7 +70,7 @@ public class Thulac {
                 userDict = new Postprocesser(configuration.userDict, "uw", true);
             }
             if (configuration.useFilter) {
-                 filter = new Filter(join(configuration.modelPath,"xu.dat"), join(configuration.modelPath,"time.dat"));
+                filter = new Filter(join(configuration.modelPath,"xu.dat"), join(configuration.modelPath,"time.dat"));
 
             }
             punctuation = new Punctuation(join(configuration.modelPath,  "singlepun.dat"));
@@ -78,35 +82,6 @@ public class Thulac {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        taggingDecoder.threshold = configuration.segOnly ? 0 : 10000;
-//        String prefix = configuration.segOnly ? "cws_" : "model_c_";
-//
-//        try {
-//            taggingDecoder.loadFiles(
-//                    join(configuration.modelPath, prefix + "model.bin"),
-//                    join(configuration.modelPath, prefix + "dat.bin"),
-//                    join(configuration.modelPath, prefix + "label.txt"));
-//            taggingDecoder.setLabelTrans();
-//
-//            preProcess.add(new PreprocessPass());
-//
-//            if (configuration.useT2S) preProcess.add(new ConvertT2SPass(join(configuration.modelPath, "t2s.dat")));
-//
-//            postProcess.add(new DictionaryPass(join(configuration.modelPath, "ns.dat"), "ns", false));
-//            postProcess.add(new DictionaryPass(join(configuration.modelPath, "idiom.dat"), "i", false));
-//            postProcess.add(new DictionaryPass(join(configuration.modelPath, "singlepun.dat"), "w", false));
-////            postProcess.add(new TimeWordPass());
-//            postProcess.add(new DoubleWordPass());
-////            postProcess.add(new SpecialPass());
-//            postProcess.add(new NegWordPass(join(configuration.modelPath, "neg.dat")));
-//
-//            if (configuration.userDict != null) postProcess.add(new DictionaryPass(configuration.userDict, "uw", true));
-//            if (configuration.useFilter) {
-//                postProcess.add(new FilterPass(join(configuration.modelPath, "xu.dat"), join(configuration.modelPath, "time.dat")));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public boolean segment(String raw, POCGraph graph, List<String> words) {

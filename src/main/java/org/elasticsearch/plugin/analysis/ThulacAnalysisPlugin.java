@@ -19,13 +19,13 @@ public class ThulacAnalysisPlugin  extends Plugin implements AnalysisPlugin {
 
   public Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> getTokenizers() {
     Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> extra = new HashMap<>();
-    extra.put("org/thulac", ThulacTokenizerFactory::getThulacIndexTokenizerFactory);
+    extra.put("thulac", ThulacTokenizerFactory::getThulacIndexTokenizerFactory);
     return extra;
   }
 
   public Map<String, AnalysisModule.AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> getAnalyzers() {
     Map<String, AnalysisModule.AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> extra = new HashMap<>();
-    extra.put("org/thulac", ThulacAnalyzerProvider::getThulacAnalyzerProvider);
+    extra.put("thulac", ThulacAnalyzerProvider::getThulacAnalyzerProvider);
     return extra;
   }
 }

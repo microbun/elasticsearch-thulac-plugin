@@ -14,7 +14,13 @@ import java.util.Iterator;
 public class ThulacTokenizerImpl implements Iterator<Token> {
     private static Iterator<Token> empty = new ArrayList<Token>(0).iterator();
 
-    private static Thulac thulac = Thulac.getInstance();
+    private static Thulac thulac;
+
+    ThulacTokenizerImpl(){
+        if (thulac==null){
+            thulac = Thulac.getInstance();
+        }
+    }
 
     private Iterator<Token> tokens;
 

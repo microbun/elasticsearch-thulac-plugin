@@ -23,7 +23,7 @@ public class Configuration {
     boolean useFilter =  false;
     Path modelPath = FileSystems.getDefault().getPath("models");
 
-    public static Configuration getInstance() {
+    public static Configuration  getInstance() {
         if (instance == null) {
             instance = new Configuration();
         }
@@ -32,8 +32,8 @@ public class Configuration {
 
     public void configuration(Environment environment, Settings settings) {
         userDict = settings.get("userDict", null);
-        useT2S = Boolean.parseBoolean(settings.get("useT2S", "false"));
-//        segOnly = Boolean.parseBoolean(settings.get("segOnly", "false"));
+        useT2S = Boolean.parseBoolean(settings.get("useT2S", "true"));
+        segOnly = Boolean.parseBoolean(settings.get("segOnly", "true"));
         useFilter = Boolean.parseBoolean(settings.get("useFilter", "false"));
         modelPath = environment.pluginsFile().resolve("org/thulac/models");
 
