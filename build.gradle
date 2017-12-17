@@ -1,0 +1,54 @@
+group 'org.elasticsearch.thulac'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    wagon
+    distJars {
+        extendsFrom runtime
+        exclude group: 'org.elasticsearch'
+        exclude group: 'lucene-core'
+        exclude group: 'org.apache.logging.log4j'
+        exclude group: 'lucene-analyzers-common'
+        exclude group: 'org.apache.commons'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/java"
+        }
+        resources {
+            srcDir "src/main/resources"
+            srcDir "src/main/assemblies"
+            include "**/*"
+        }
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    dependencies { compile files('libs/thulac-1.0.jar')}
+    compile 'org.elasticsearch:elasticsearch:6.1.0'
+}
+
+task release(type: Zip, dependsOn: [':jar']) {
+    into('thulac') {
+        from configurations.distJars
+        from 'build/libs'
+        from 'build/resources/main/plugin.xml'
+        from 'build/resources/main/plugin-descriptor.properties'
+    }
+    from('models') {
+        include "**/*"
+        into ('thulac/models')
+    }
+}
