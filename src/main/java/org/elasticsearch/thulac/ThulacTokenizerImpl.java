@@ -1,7 +1,7 @@
 package org.elasticsearch.thulac;
 
-import org.thunlp.thulac.data.POCGraph;
-import org.thunlp.thulac.data.TaggedWord;
+
+import org.thulac.base.POCGraph;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -45,14 +45,14 @@ public class ThulacTokenizerImpl implements Iterator<Token> {
             }
             raw = bdr.toString().trim();
             POCGraph graph = new POCGraph();
-            ArrayList<TaggedWord> words = new ArrayList<>();
+            ArrayList<String> words = new ArrayList<>();
             thulac.segment(raw, graph, words);
             if (!words.isEmpty()) {
                 int length = 0, offset = 0;
                 ArrayList<Token> tokenArray = new ArrayList<>(words.size());
-                for (TaggedWord token : words) {
-                    length = token.word.length();
-                    tokenArray.add(new Token(token.word, offset, offset + length, length));
+                for (String token : words) {
+                    length = token.length();
+                    tokenArray.add(new Token(token, offset, offset + length, ""));
                     offset += length;
                 }
                 tokens = tokenArray.iterator();

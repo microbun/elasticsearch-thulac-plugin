@@ -33,8 +33,9 @@ public class ThulacTokenizer extends Tokenizer {
         if (scanner.hasNext()) {
             Token token = scanner.next();
             termAtt.append(token.getWord());
-            termAtt.setLength(token.getLength());
+            termAtt.setLength(token.getWord().length());
             offsetAtt.setOffset(token.getStartOffset(), token.getEndOffset());
+            typeAtt.setType("<"+token.getTag()+">");
             endPosition = token.getEndOffset();
             return true;
         }

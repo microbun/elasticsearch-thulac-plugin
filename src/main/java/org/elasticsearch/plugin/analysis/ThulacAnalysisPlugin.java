@@ -2,7 +2,6 @@ package org.elasticsearch.plugin.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.elasticsearch.index.analysis.AnalyzerProvider;
-import org.elasticsearch.index.analysis.ThaiTokenizerFactory;
 import org.elasticsearch.index.analysis.TokenizerFactory;
 import org.elasticsearch.indices.analysis.AnalysisModule;
 import org.elasticsearch.plugins.AnalysisPlugin;
@@ -20,13 +19,13 @@ public class ThulacAnalysisPlugin  extends Plugin implements AnalysisPlugin {
 
   public Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> getTokenizers() {
     Map<String, AnalysisModule.AnalysisProvider<TokenizerFactory>> extra = new HashMap<>();
-    extra.put("thulac", ThulacTokenizerFactory::getThulacIndexTokenizerFactory);
+    extra.put("org/thulac", ThulacTokenizerFactory::getThulacIndexTokenizerFactory);
     return extra;
   }
 
   public Map<String, AnalysisModule.AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> getAnalyzers() {
     Map<String, AnalysisModule.AnalysisProvider<AnalyzerProvider<? extends Analyzer>>> extra = new HashMap<>();
-    extra.put("thulac", ThulacAnalyzerProvider::getThulacAnalyzerProvider);
+    extra.put("org/thulac", ThulacAnalyzerProvider::getThulacAnalyzerProvider);
     return extra;
   }
 }

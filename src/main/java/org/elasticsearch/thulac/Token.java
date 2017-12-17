@@ -7,15 +7,15 @@ public class Token {
 
     private String word;
 
-    private int length;
+    private String tag;
 
     private int startOffset;
 
     private int endOffset;
 
-    public Token(String word, int startOffset, int endOffset,int length) {
+    public Token(String word, int startOffset, int endOffset,String tag) {
         this.word = word;
-        this.length  = length;
+        this.tag  = tag;
         this.startOffset = startOffset;
         this.endOffset = endOffset;
     }
@@ -32,7 +32,7 @@ public class Token {
         return endOffset;
     }
 
-    public int getLength() {
-        return length;
+    public String getTag() {
+        return tag;
     }
 }

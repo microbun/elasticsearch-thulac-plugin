@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <assembly>
-    <id>analysis-thulac-release</id>
+    <id>analysis-org.thulac-release</id>
     <formats>
         <format>zip</format>
     </formats>

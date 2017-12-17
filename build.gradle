@@ -1,4 +1,4 @@
-group 'org.elasticsearch.thulac'
+group 'org.elasticsearch.org.thulac'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -36,12 +36,14 @@ sourceSets {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    dependencies { compile files('libs/thulac-1.0.jar')}
+//    dependencies { compile files('libs/org.thulac-1.0.jar')}
+//    dependencies { compile files('libs/THULAC_lite_java_v1_2_run.jar')}
+
     compile 'org.elasticsearch:elasticsearch:6.1.0'
 }
 
 task release(type: Zip, dependsOn: [':jar']) {
-    into('thulac') {
+    into('org.thulac') {
         from configurations.distJars
         from 'build/libs'
         from 'build/resources/main/plugin.xml'
@@ -49,6 +51,6 @@ task release(type: Zip, dependsOn: [':jar']) {
     }
     from('models') {
         include "**/*"
-        into ('thulac/models')
+        into ('org.thulac/models')
     }
 }
