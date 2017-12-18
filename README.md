@@ -4,10 +4,10 @@
 版本
 --------
 
-Plugin 版本 | ES 版本 | THULAC 版本
+Plugin 版本 | ES 版本 | THULAC 版本 |  Link
 -----------|-----------|-----------
 master | 6.x -> master | 1.2
-6.1.0 | 6.1.0          | 1.2
+6.1.0 | 6.1.0          | 1.2      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0.tar.gz)
 
 安装
 --------
