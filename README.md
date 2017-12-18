@@ -42,25 +42,7 @@ thulac
 --------
 1.创建索引
 ```bash
-curl -XPUT http://localhost:9200/index
-{
-  "settings": {
-    "analysis": {
-      "analyzer": {
-        "thulac_ana": {
-          "tokenizer": "thulac",
-          "filter": [
-            "lowercase",
-            "jieba_stop"
-          ]
-        }
-      }
-    }
-  }
-```
-2.查看索引
-```bash
-curl -XPOST http://localhost:9200/index/_analyze?
+curl -H "Content-Type:application/json" -XPUT http://localhost:9200/index -d'
 {
   "settings": {
     "analysis": {
@@ -74,14 +56,24 @@ curl -XPOST http://localhost:9200/index/_analyze?
       }
     }
   }
+}
+'
+```
+2.查看索引
+```bash
+curl http://localhost:9200/index
 ```
 3.测试分词效果
 ```bash
-curl -XPOST http://localhost:9200/index/_analyze?
+curl -H "Content-Type:application/json"  -XPOST http://localhost:9200/index/_analyze -d'
 {
  "analyzer":"thulac_ana",
  "text":"我是中国人"
 }
-```
+'
 
-POST 
+```
+4.删除索引
+```
+curl -XDELETE http://localhost:9200/index
+```
