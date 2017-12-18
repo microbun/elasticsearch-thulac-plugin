@@ -2,7 +2,6 @@ package org.elasticsearch.plugin.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.elasticsearch.index.analysis.AnalyzerProvider;
-import org.elasticsearch.index.analysis.ThaiTokenizerFactory;
 import org.elasticsearch.index.analysis.TokenizerFactory;
 import org.elasticsearch.indices.analysis.AnalysisModule;
 import org.elasticsearch.plugins.AnalysisPlugin;

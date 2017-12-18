@@ -1,17 +1,15 @@
 package org.elasticsearch.thulac;
 
-import org.thunlp.thulac.cb.CBTaggingDecoder;
-import org.thunlp.thulac.data.POCGraph;
-import org.thunlp.thulac.data.TaggedWord;
-import org.thunlp.thulac.postprocess.*;
-import org.thunlp.thulac.preprocess.ConvertT2SPass;
-import org.thunlp.thulac.preprocess.IPreprocessPass;
-import org.thunlp.thulac.preprocess.PreprocessPass;
+
+import org.thulac.base.POCGraph;
+import org.thulac.base.SegmentedSentence;
+import org.thulac.base.TaggedSentence;
+import org.thulac.character.CBTaggingDecoder;
+import org.thulac.manage.*;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,9 +17,21 @@ import java.util.List;
  */
 public class Thulac {
     private static Thulac thulac;
-    private List<IPreprocessPass> preProcess = new ArrayList<>();
-    private List<IPostprocessPass> postProcess = new ArrayList<>();
+    //    private List<IPreprocessPass> preProcess = new ArrayList<>();
+//    private List<IPostprocessPass> postProcess = new ArrayList<>();
     private CBTaggingDecoder taggingDecoder = new CBTaggingDecoder();
+
+
+    private CBTaggingDecoder cbTaggingDecoder = new CBTaggingDecoder();
+    Preprocesser preprocesser;
+    Postprocesser nsDict;
+    Postprocesser idiomDict;
+    Postprocesser userDict;
+    Punctuation punctuation;
+    TimeWord timeword;
+    NegWord negword;
+    VerbWord verbword;
+    Filter filter;
 
     Configuration configuration = Configuration.getInstance();
 
@@ -30,42 +40,80 @@ public class Thulac {
     }
 
     private Thulac() {
-        taggingDecoder.threshold = configuration.segOnly ? 0 : 10000;
-        String prefix = configuration.segOnly ? "cws_" : "model_c_";
+        init();
+    }
 
+    public void init(){
+        String prefix = configuration.segOnly ? "cws_" : "model_c_";
+        Character separator = '_';
+        cbTaggingDecoder.separator = separator;
         try {
-            taggingDecoder.loadFiles(
+            if (configuration.segOnly) {
+                cbTaggingDecoder.threshold = 0;
+
+            } else {
+                cbTaggingDecoder.threshold = 10000;
+            }
+            cbTaggingDecoder.init(
                     join(configuration.modelPath, prefix + "model.bin"),
                     join(configuration.modelPath, prefix + "dat.bin"),
-                    join(configuration.modelPath, prefix + "label.txt"));
-            taggingDecoder.setLabelTrans();
+                    join(configuration.modelPath, prefix + "label.txt")
+            );
+            cbTaggingDecoder.setLabelTrans();
 
-            preProcess.add(new PreprocessPass());
-
-            if (configuration.useT2S) preProcess.add(new ConvertT2SPass(join(configuration.modelPath, "t2s.dat")));
-
-            postProcess.add(new DictionaryPass(join(configuration.modelPath, "ns.dat"), "ns", false));
-            postProcess.add(new DictionaryPass(join(configuration.modelPath, "idiom.dat"), "i", false));
-            postProcess.add(new DictionaryPass(join(configuration.modelPath, "singlepun.dat"), "w", false));
-            postProcess.add(new TimeWordPass());
-            postProcess.add(new DoubleWordPass());
-            postProcess.add(new SpecialPass());
-            postProcess.add(new NegWordPass(join(configuration.modelPath, "neg.dat")));
-            if (configuration.userDict != null) postProcess.add(new DictionaryPass(configuration.userDict, "uw", true));
-            if (configuration.useFilter) {
-                postProcess.add(new FilterPass(join(configuration.modelPath, "xu.dat"), join(configuration.modelPath, "time.dat")));
+            preprocesser = new Preprocesser();
+            preprocesser.setT2SMap(join(configuration.modelPath, "t2s.dat"));
+            nsDict = new Postprocesser(join(configuration.modelPath,"ns.dat"), "ns", false);
+            idiomDict = new Postprocesser(join(configuration.modelPath, "idiom.dat"), "i", false);
+            userDict = null;
+            if (configuration.userDict != null) {
+                userDict = new Postprocesser(configuration.userDict, "uw", true);
             }
+            if (configuration.useFilter) {
+                filter = new Filter(join(configuration.modelPath,"xu.dat"), join(configuration.modelPath,"time.dat"));
+
+            }
+            punctuation = new Punctuation(join(configuration.modelPath,  "singlepun.dat"));
+            timeword = new TimeWord();
+            negword = new NegWord(join(configuration.modelPath, "neg.dat"));
+            verbword = new VerbWord(join(configuration.modelPath,"vM.dat"), join(configuration.modelPath,  "vD.dat"));
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean segment(String raw, POCGraph graph, List<TaggedWord> words) {
-        for (IPreprocessPass pass : preProcess) raw = pass.process(raw, graph);
-        boolean r = taggingDecoder.segment(raw, graph, words);
-        for (IPostprocessPass pass : postProcess) pass.process(words);
-        return r;
+    public boolean segment(String raw, POCGraph graph, List<String> words) {
+        SegmentedSentence segged = new SegmentedSentence();
+        TaggedSentence tagged = new TaggedSentence();
+        if (configuration.useT2S) {
+            String traw = new String();
+            raw = preprocesser.T2S(preprocesser.clean(raw, graph));
+        } else {
+            raw = preprocesser.clean(raw, graph);
+        }
+        cbTaggingDecoder.segment(raw, graph, tagged);
+
+        cbTaggingDecoder.get_seg_result(segged);
+        nsDict.adjust(segged);
+        idiomDict.adjust(segged);
+        punctuation.adjust(segged);
+        timeword.adjust(segged);
+        negword.adjust(segged);
+        if (userDict != null) {
+            userDict.adjust(segged);
+        }
+        if (configuration.useFilter) {
+            filter.adjust(segged);
+        }
+        for(int j=0;j<segged.size();j++) {
+            words.add(segged.get(j));
+        }
+
+        return true;
     }
+
 
     public static Thulac getInstance() {
         if (thulac == null) {
