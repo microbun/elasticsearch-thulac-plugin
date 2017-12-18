@@ -35,7 +35,7 @@ public class Configuration {
         useT2S = Boolean.parseBoolean(settings.get("useT2S", "true"));
         segOnly = Boolean.parseBoolean(settings.get("segOnly", "true"));
         useFilter = Boolean.parseBoolean(settings.get("useFilter", "false"));
-        modelPath = environment.pluginsFile().resolve("org/thulac/models");
+        modelPath = environment.pluginsFile().resolve("thulac/models");
 
     }
 }
