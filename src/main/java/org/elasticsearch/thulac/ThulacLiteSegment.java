@@ -82,23 +82,18 @@ public class ThulacLiteSegment {
         post.add(SpecialPassBuilder.getInstance());
         post.add(NegWordPassBuilder.getInstance(join(configuration.modelPath, "neg.dat")));
         if (configuration.userDict != null) {
-            Path dictPath =Paths.get(join(configuration.modelPath, configuration.userDict));
-            if (Files.exists(dictPath)) {
-                post.add(DictionaryPassBuilder.getInstance(dictPath.toAbsolutePath().toString(), "uw", true));
+            String path = configuration.userDict;
+            if (!Paths.get(path).isAbsolute()) {
+                path = join(configuration.modelPath, configuration.userDict);
+            }
+            if (Files.exists(Paths.get(path))) {
+                post.add(DictionaryPassBuilder.getInstance(path, "uw", true));
             } else {
-                logger.warn("not found user_dict:{}", configuration.userDict);
-                dictPath = Paths.get(configuration.userDict);
-                if (Files.exists(dictPath)) {
-                    post.add(DictionaryPassBuilder.getInstance(dictPath.toAbsolutePath().toString(), "uw", true));
-                } else {
-                    logger.warn("not found user_dict:{}", configuration.userDict);
+                if (!configuration.userDict.equals("userdict.txt")) {
+                    throw new IllegalArgumentException("not exists user_dict[" + path + "]");
                 }
             }
         }
-        if (configuration.filter) {
-            post.add(FilterPassBuilder.getInstance(join(configuration.modelPath, "xu.dat"), join(configuration.modelPath, "time.dat")));
-        }
-
     }
 
 

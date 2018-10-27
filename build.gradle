@@ -1,5 +1,5 @@
 group 'org.elasticsearch.thulac'
-version '6.2.0-181027'
+version '6.3.0-181027'
 
 apply plugin: 'java'
 
@@ -28,7 +28,6 @@ sourceSets {
         }
         resources {
             srcDir "src/main/resources"
-            srcDir "src/main/assemblies"
             include "**/*"
         }
     }
@@ -36,7 +35,7 @@ sourceSets {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile 'org.elasticsearch:elasticsearch:6.2.0'
+    compile 'org.elasticsearch:elasticsearch:6.3.0'
 }
 
 task release(type: Zip, dependsOn: [':jar']) {
@@ -45,6 +44,7 @@ task release(type: Zip, dependsOn: [':jar']) {
         from 'build/libs'
         from 'build/resources/main/plugin.xml'
         from 'build/resources/main/plugin-descriptor.properties'
+        from 'build/resources/main/plugin-security.policy'
     }
     from('models') {
         include "**/*"

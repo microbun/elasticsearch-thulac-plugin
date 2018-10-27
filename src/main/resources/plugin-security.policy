@@ -1,0 +1,4 @@
+grant {
+  // needed because of the hot reload functionality
+  permission java.io.FilePermission "<<ALL FILES>>", "read";
+};
