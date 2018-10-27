@@ -34,7 +34,7 @@ public class ThulacLiteSegment {
     private List<IPostprocessPass> post = new ArrayList<>();
 
     private ThulacLiteSegment(Configuration configuration) throws IOException {
-        logger = Loggers.getLogger(getClass(), configuration.getSettings());
+        logger = Loggers.getLogger(getClass());
         synchronized (decoder) {
             init(configuration);
         }

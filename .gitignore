@@ -170,6 +170,9 @@ fabric.properties
 
 .classpath
 .project
-module/*
+models/*.bin
+models/*.txt
+models/model*
+models/*.dat
 *.iml
 .idea

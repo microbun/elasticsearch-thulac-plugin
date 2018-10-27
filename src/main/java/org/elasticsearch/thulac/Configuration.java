@@ -15,7 +15,7 @@ import java.nio.file.Path;
  */
 public class Configuration {
 
-    String userDict = "userword.txt";
+    String userDict = "userdict.txt";
     boolean t2s = false;
     boolean segOnly = true;
     boolean filter = false;
@@ -32,8 +32,7 @@ public class Configuration {
         this.environment = environment;
         this.indexSettings = indexSettings;
         this.settings = settings;
-        this.logger = Loggers.getLogger(getClass(), indexSettings.getSettings(), indexSettings.getIndex());
-        userDict = settings.get("user_dict", "userword.txt");
+        userDict = settings.get("user_dict", "userdict.txt");
         t2s = settings.getAsBoolean("t2s", true);
 //        segOnly = settings.getAsBoolean("seg_only", true);
         filter = settings.getAsBoolean("filter", false);
