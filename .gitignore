@@ -171,4 +171,5 @@ fabric.properties
 .classpath
 .project
 module/*
-.iml
+*.iml
+.idea
