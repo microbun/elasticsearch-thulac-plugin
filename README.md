@@ -6,12 +6,20 @@
 
 Plugin 版本 | ES 版本 | THULAC 版本 |  Link
 -----------|-----------|----------|------------
-master | 6.x -> master | 1.2      |
-6.1.0 | 6.1.0          | 1.2      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0.tar.gz)
+master | 6.x -> master | lite      |
+6.1.0 | 6.1.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0-lite.tar.gz)
+6.1.0 | 6.1.0          | 1.2      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0.tar.gz) 
 
-安装
+>注意：thulac v1.2 分词存在问题[issues#3](https://github.com/microbun/elasticsearch-thulac-plugin/issues/3)，请使用 THULAC lite版本对应的插件。
+
+
+下载安装
 --------
-1.编译打包
+直接下载已经打包好的插件，解压到elasticsearch的plugins目录下即可。
+
+编译安装
+--------
+1.编译打包 
 
 ```bash
 git clone git@github.com:microbun/elasticsearch-thulac-plugin.git
@@ -40,30 +48,73 @@ thulac
 
 示例
 --------
-1.创建索引
+#### 1.创建索引
+
+1.1 使用默认分词方式
 ```bash
 curl -H "Content-Type:application/json" -XPUT http://localhost:9200/index -d'
 {
   "settings": {
-    "analysis": {
-      "analyzer": {
-        "thulac_ana": {
-          "tokenizer": "thulac",
-          "filter": [
-            "lowercase"
-          ]
-        }
+  },
+  "mapping": {
+    "properties": {
+      "text": {
+        "type": "text",
+        "analyzer": "thulac"
       }
     }
   }
 }
 '
 ```
-2.查看索引
+
+1.2 自定义分词器
+```bash
+curl -H "Content-Type:application/json" -XPUT http://localhost:9200/index -d'
+{
+  "settings": {
+    "analysis": {
+      "tokenizer": {
+        "custom_thulac_tokenizer": {
+          "type": "thulac",
+          "user_dict": "userword.txt",
+          "t2s": true,
+          "filter": false
+        }
+      },
+      "analyzer": {
+        "custom_thulac_analyzer": {
+          "tokenizer": "custom_thulac_tokenizer",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
+    }
+  },
+  "mapping": {
+    "properties": {
+      "text": {
+        "type": "text",
+        "analyzer": "custom_thulac_tokenizer"
+      }
+    }
+  }
+}
+```
+
+| 参数名称 | 含义 | 值 |
+| --- | --- |---|
+| t2s | 将句子从繁体转化为简体。默认：true | false/true |
+| filter | 使用过滤器去除一些没有意义的词语，例如“可以”。默认：false | false/true |
+| user_dict | 自定义词典路径，每一个词一行，UTF8编码，相对路径和绝对路径.</br>相对路径：userdict.txt 会加载 ${ES_HOME}/plugins/module/userdict.txt文件</br>绝对路径：/home/elasticsearch/userdict.txt</br>默认：userdict.txt |  |
+
+#### 2.查看索引
 ```bash
 curl http://localhost:9200/index
 ```
-3.测试分词效果
+
+#### 3.测试分词效果
 ```bash
 curl -H "Content-Type:application/json"  -XPOST http://localhost:9200/index/_analyze -d'
 {
@@ -73,7 +124,7 @@ curl -H "Content-Type:application/json"  -XPOST http://localhost:9200/index/_ana
 '
 
 ```
-4.删除索引
+#### 4.删除索引
 ```
 curl -XDELETE http://localhost:9200/index
 ```

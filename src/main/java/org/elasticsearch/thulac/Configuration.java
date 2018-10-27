@@ -1,7 +1,11 @@
 package org.elasticsearch.thulac;
 
+import org.apache.logging.log4j.Logger;
+import org.elasticsearch.common.logging.ESLoggerFactory;
+import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
+import org.elasticsearch.index.IndexSettings;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -11,31 +15,42 @@ import java.nio.file.Path;
  */
 public class Configuration {
 
-    private static Configuration instance;
+    String userDict = "userword.txt";
+    boolean t2s = false;
+    boolean segOnly = true;
+    boolean filter = false;
+    Path modelPath = FileSystems.getDefault().getPath("models/");
+    private Environment environment;
+    private IndexSettings indexSettings;
+    private Settings settings;
+    private Logger logger = ESLoggerFactory.getLogger(getClass());
 
     public Configuration() {
-
     }
 
-    String userDict = null;
-    boolean useT2S = true;
-    boolean segOnly = true;
-    boolean useFilter =  false;
-    Path modelPath = FileSystems.getDefault().getPath("models");
-
-    public static Configuration  getInstance() {
-        if (instance == null) {
-            instance = new Configuration();
-        }
-        return instance;
-    }
-
-    public void configuration(Environment environment, Settings settings) {
-        userDict = settings.get("userDict", null);
-        useT2S = Boolean.parseBoolean(settings.get("useT2S", "true"));
-        segOnly = Boolean.parseBoolean(settings.get("segOnly", "true"));
-        useFilter = Boolean.parseBoolean(settings.get("useFilter", "false"));
+    public Configuration(Environment environment, IndexSettings indexSettings, Settings settings) {
+        this.environment = environment;
+        this.indexSettings = indexSettings;
+        this.settings = settings;
+        this.logger = Loggers.getLogger(getClass(), indexSettings.getSettings(), indexSettings.getIndex());
+        userDict = settings.get("user_dict", "userword.txt");
+        t2s = settings.getAsBoolean("t2s", true);
+//        segOnly = settings.getAsBoolean("seg_only", true);
+        filter = settings.getAsBoolean("filter", false);
         modelPath = environment.pluginsFile().resolve("thulac/models");
+//        logger.info("thulac settings: path={}", modelPath.toAbsolutePath().toString());
+//        logger.info("thulac settings: user_dict={} use_t2s={} seg_only={} use_filter={} ", userDict, segOnly, useFilter);
+    }
 
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public IndexSettings getIndexSettings() {
+        return indexSettings;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 }
