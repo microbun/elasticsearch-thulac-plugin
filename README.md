@@ -7,7 +7,7 @@
 Plugin 版本 | ES 版本 | THULAC 版本 |  Link
 -----------|-----------|----------|------------
 master | 6.x -> master | lite      |
-6.1.0 | 6.1.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0-lite.tar.gz)
+6.1.0-181027 | 6.1.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0-lite.tar.gz)
 6.1.0 | 6.1.0          | 1.2      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0.tar.gz) 
 
 >注意：thulac v1.2 分词存在问题[issues#3](https://github.com/microbun/elasticsearch-thulac-plugin/issues/3)，请使用 THULAC lite版本对应的插件。
@@ -118,12 +118,12 @@ curl http://localhost:9200/index
 ```bash
 curl -H "Content-Type:application/json"  -XPOST http://localhost:9200/index/_analyze -d'
 {
- "analyzer":"thulac_ana",
+ "analyzer":"thulac", 
  "text":"我是中国人"
 }
 '
-
 ```
+
 #### 4.删除索引
 ```
 curl -XDELETE http://localhost:9200/index
