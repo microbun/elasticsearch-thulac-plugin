@@ -170,3 +170,4 @@ fabric.properties
 
 .classpath
 .project
+module/*
