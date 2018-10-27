@@ -79,7 +79,7 @@ curl -H "Content-Type:application/json" -XPUT http://localhost:9200/index -d'
       "tokenizer": {
         "custom_thulac_tokenizer": {
           "type": "thulac",
-          "user_dict": "userword.txt",
+          "user_dict": "userdict.txt",
           "t2s": true,
           "filter": false
         }

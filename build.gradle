@@ -38,7 +38,7 @@ dependencies {
     compile 'org.elasticsearch:elasticsearch:6.3.0'
 }
 
-task release(type: Zip, dependsOn: [':jar']) {
+task release_full(type: Zip, dependsOn: [':jar']) {
     into('thulac') {
         from configurations.distJars
         from 'build/libs'
@@ -48,6 +48,21 @@ task release(type: Zip, dependsOn: [':jar']) {
     }
     from('models') {
         include "**/*"
+        into ('thulac/models')
+    }
+}
+
+task release_lite(type: Zip, dependsOn: [':jar']) {
+    into('thulac') {
+        from configurations.distJars
+        from 'build/libs'
+        from 'build/resources/main/plugin.xml'
+        from 'build/resources/main/plugin-descriptor.properties'
+        from 'build/resources/main/plugin-security.policy'
+    }
+    from('models') {
+        include "README.md"
+        include "userdict.txt"
         into ('thulac/models')
     }
 }
