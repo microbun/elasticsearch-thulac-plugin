@@ -45,7 +45,7 @@ thulac
  |-plugin.xml
 ```
 
-3.由于THULAC的算法模型太大，插件中没有包含模型数据，可以在[THULAC](https://github.com/thunlp/THULAC-Java) 下载算法模型(v1_2)，算法模型拷贝到models中。
+3.由于THULAC的模型太大，插件中没有包含模型数据，可以在[THULAC](https://github.com/thunlp/THULAC-Java) 下载模型(lite)，将模型拷贝到models中。
 
 
 示例
