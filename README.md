@@ -7,12 +7,15 @@
 Plugin 版本 | ES 版本 | THULAC 版本 |  Link
 -----------|-----------|----------|------------
 master | 6.x -> master | lite      |
+6.5.1-181027 | 6.5.1          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.5.1-181027.zip)
+6.5.0-181027 | 6.5.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.5.0-181027.zip)
+6.4.3-181027 | 6.4.3          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.4.3-181027.zip)
+6.4.2-181027 | 6.4.2          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.4.2-181027.zip)
+6.4.1-181027 | 6.4.1          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.4.1-181027.zip)
+6.4.0-181027 | 6.4.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.4.0-181027.zip)
 6.3.0-181027 | 6.3.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.3.0-181027.zip)
 6.2.0-181027 | 6.2.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.2.0-181027/elasticsearch-thulac-plugin-6.2.0-181027.zip)
 6.1.0-181027 | 6.1.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.1.0-181027/elasticsearch-thulac-plugin-6.1.0-181027.zip)
-6.1.0 | 6.1.0          | 1.2      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/archive/v6.1.0.tar.gz) 
-
->注意：thulac v1.2 分词存在问题[issues#3](https://github.com/microbun/elasticsearch-thulac-plugin/issues/3)，请使用 THULAC lite版本对应的插件。
 
 
 下载安装
