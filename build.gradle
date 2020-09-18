@@ -1,5 +1,5 @@
 group 'org.elasticsearch.thulac'
-version '6.4.1-181027'
+version '7.9.1'
 
 apply plugin: 'java'
 
@@ -35,7 +35,7 @@ sourceSets {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile 'org.elasticsearch:elasticsearch:6.4.1'
+    compile 'org.elasticsearch:elasticsearch:7.9.1'
 }
 
 task release_full(type: Zip, dependsOn: [':jar']) {

@@ -6,7 +6,8 @@
 
 Plugin 版本 | ES 版本 | THULAC 版本 |  Link
 -----------|-----------|----------|------------
-master | 6.x -> master | lite      |
+master | 7.x -> master | lite      |
+7.9.1  | 7.9.1         | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/7.9.1/elasticsearch-thulac-plugin-7.9.1.zip)
 6.4.1-181027 | 6.4.1          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.4.1-181027/elasticsearch-thulac-plugin-6.4.1-181027.zip)
 6.4.0-181027 | 6.4.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.4.0-181027/elasticsearch-thulac-plugin-6.4.0-181027.zip)
 6.3.0-181027 | 6.3.0          | lite      |[下载](https://github.com/microbun/elasticsearch-thulac-plugin/releases/download/6.3.0-181027/elasticsearch-thulac-plugin-6.3.0-181027.zip)
@@ -30,15 +31,15 @@ cd elasticsearch-thulac-plugin
 
 2.安装到elasticsearch
 ```
-cp build/distributions/elasticsearch-thulac-plugin-6.1.0.zip ${ES_HOME}/plugins
+cp build/distributions/elasticsearch-thulac-plugin-7.9.1.zip ${ES_HOME}/plugins
 cd ${ES_HOME}/plugins
-unzip elasticsearch-thulac-plugin-6.1.0.zip
-rm elasticsearch-thulac-plugin-6.1.0.zip
+unzip elasticsearch-thulac-plugin-7.9.1.zip
+rm elasticsearch-thulac-plugin-7.9.1.zip
 ```
 解压后在plugins目录下会有一个thulac文件夹。
 ```
 thulac
- |-elasticsearch-thulac-plugin-6.1.0.jar
+ |-elasticsearch-thulac-plugin-7.9.1.jar
  |-models #算法模型目录
  |-plugin-descriptor.properties
  |-plugin.xml
@@ -55,9 +56,7 @@ thulac
 ```bash
 curl -H "Content-Type:application/json" -XPUT http://localhost:9200/index -d'
 {
-  "settings": {
-  },
-  "mapping": {
+  "mappings": {
     "properties": {
       "text": {
         "type": "text",
@@ -93,15 +92,15 @@ curl -H "Content-Type:application/json" -XPUT http://localhost:9200/index -d'
       }
     }
   },
-  "mapping": {
+  "mappings": {
     "properties": {
       "text": {
         "type": "text",
-        "analyzer": "custom_thulac_tokenizer"
+        "analyzer": "custom_thulac_analyzer"
       }
     }
   }
-}
+}'
 ```
 
 | 参数名称 | 含义 | 值 |

@@ -26,7 +26,7 @@ public class ThulacLiteSegment {
     private static final Map<String, CBTaggingDecoder> decoder = new HashMap<>();
 
     private static final Map<Configuration, ThulacLiteSegment> cache = new ConcurrentHashMap<>();
-    private Logger logger;
+    ;
     private CBTaggingDecoder taggingDecoder;
     // preprocess passes
     private List<IPreprocessPass> pre = new ArrayList<>();
@@ -34,7 +34,6 @@ public class ThulacLiteSegment {
     private List<IPostprocessPass> post = new ArrayList<>();
 
     private ThulacLiteSegment(Configuration configuration) throws IOException {
-        logger = Loggers.getLogger(getClass());
         synchronized (decoder) {
             init(configuration);
         }

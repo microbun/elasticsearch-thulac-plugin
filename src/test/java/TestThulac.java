@@ -12,8 +12,8 @@ public class TestThulac {
 
     @Test
     public void test2() throws IOException {
-        ThulacLiteTokenizerScanner tokenizer = new ThulacLiteTokenizerScanner(new Configuration(environment));
-        InputStreamReader isr =new InputStreamReader(getClass().getClassLoader().getResource("input").openStream());
+        ThulacLiteTokenizerScanner tokenizer = new ThulacLiteTokenizerScanner(new Configuration());
+        InputStreamReader isr = new InputStreamReader(getClass().getClassLoader().getResource("input").openStream());
         tokenizer.reset(isr);
         while (tokenizer.hasNext()) {
             TaggedWord token = tokenizer.next();

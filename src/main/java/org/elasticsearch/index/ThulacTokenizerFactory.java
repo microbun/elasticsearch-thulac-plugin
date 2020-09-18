@@ -14,7 +14,7 @@ public class ThulacTokenizerFactory extends AbstractTokenizerFactory {
     private Configuration configuration;
 
     public ThulacTokenizerFactory(IndexSettings indexSettings, Environment environment, String name, Settings settings) {
-        super(indexSettings, name, settings);
+        super(indexSettings, settings, name);
         configuration = new Configuration(environment, indexSettings, settings);
     }
 

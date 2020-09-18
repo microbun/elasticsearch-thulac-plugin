@@ -21,7 +21,7 @@ public class ThulacAnalyzerProvider extends AbstractIndexAnalyzerProvider<Thulac
      */
     public ThulacAnalyzerProvider(IndexSettings indexSettings, Environment environment, String name, Settings settings) {
         super(indexSettings, name, settings);
-        Configuration configuration = new Configuration(environment, indexSettings, settings);
+        Configuration configuration = new Configuration(environment,indexSettings, settings);
         thulacAnalyzer = new ThulacAnalyzer(configuration);
     }
 

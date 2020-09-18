@@ -1,7 +1,6 @@
 package org.elasticsearch.thulac;
 
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.common.logging.ESLoggerFactory;
 import org.elasticsearch.common.logging.Loggers;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
@@ -23,7 +22,7 @@ public class Configuration {
     private Environment environment;
     private IndexSettings indexSettings;
     private Settings settings;
-    private Logger logger = ESLoggerFactory.getLogger(getClass());
+    private Logger logger = Loggers.getLogger(getClass(),"thulac");
 
     public Configuration() {
     }
@@ -38,7 +37,7 @@ public class Configuration {
         filter = settings.getAsBoolean("filter", false);
         modelPath = environment.pluginsFile().resolve("thulac/models");
 //        logger.info("thulac settings: path={}", modelPath.toAbsolutePath().toString());
-//        logger.info("thulac settings: user_dict={} use_t2s={} seg_only={} use_filter={} ", userDict, segOnly, useFilter);
+//        logger.info("thulac settings: user_dict={} use_t2s={} seg_only={} use_filter={} ", userDict, t2s, segOnly, useFilter);
     }
 
     public Environment getEnvironment() {
